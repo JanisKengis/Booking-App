@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../../style.css">
+    <title>Edit listing</title>
+
+
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <ul class="container navbar-nav ms-auto">
+            {% if name != "" %}
+            <li class="navbar-brand" style="color:white">You are logged in as: {{ name }}!</li>
+            <div class="div2">
+                <form action="/logout" method="post">
+                    <button type="submit" name="logout" class="btn btn-primary btn-lg"> Log Out </button>
+                </form>
+            </div>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<div class="container" style="padding-top: 10px">
+<a class="navbar-brand" href="/apartments"> Back </a>
+
+    <section class="p-5">
+
+<form action="/apartments/{{apartment.id}}/update" method="post">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" value="{{apartment.name}}">
+    <label for="address">Address</label>
+    <input type="text" name="address" id="address" value="{{apartment.address}}">
+    <label for="description">Short description</label>
+    <textarea name="description" id="description" cols="40" rows="5">{{apartment.description}}</textarea>
+    <label for="from">Available from</label>
+    <input type="date" name="from" id="from" value="{{apartment.from}}">
+    <label for="till">Available till</label>
+    <input type="date" name="till" id="till" value="{{apartment.till}}">
+    <label for="till">Price</label>
+    <input type="text" name="price" id="price" value="{{apartment.price}}">
+    <button type="submit" name="submit" class="button"> Save </button>
+</form>
+    </section>
+</div>
+</body>
+</html>
+{% endblock %}

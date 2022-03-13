@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<html lang="en">
+<head>
+    <title>Reservation</title>
+</head>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <ul class="container navbar-nav ms-auto">
+            {% if name != "" %}
+            <li class="navbar-brand" style="color:white">You are logged in as: {{ name }}!</li>
+            <div class="div2">
+                <form action="/logout" method="post">
+                    <button type="submit" name="logout" class="btn btn-primary btn-lg"> Log Out </button>
+                </form>
+            </div>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<div class="container" style="padding-top: 10px">
+<a class="navbar-brand" href="/apartments/{{apartment.id}}"> Back </a>
+
+    <section class="p-5">
+<h2>Details about apartment - {{apartment.name}}</h2>
+
+<ul>
+    <li>
+        Name: {{apartment.name}}
+    </li>
+    <li>
+        Address: {{apartment.address}}
+    </li>
+    <li>
+        Available from: {{apartment.availableFrom}}
+    </li>
+    <li>
+        Available until: {{apartment.availableTill}}
+    </li>
+    <li>
+       <b style="color: blue">Price for one night: {{apartment.price}}€</b>
+    </li>
+</ul>
+
+<div>
+    <p>Please choose You preferred period of visit from available dates</p>
+</div>
+
+<form action="/apartments/{{apartment.id}}/reserve" method="post">
+    <label for="reserve_from">Date of arrival:</label>
+    <div>
+        <div id="datepicker">
+            <input type="text" name="reserve_from" id="reserve_from" class="datepicker">
+        </div>
+    </div>
+    <div>
+        <label for="reserve_till">Date of leaving:</label>
+        <div id="datepicker">
+            <input type="text" name="reserve_till" id="reserve_till" class="datepicker">
+        </div>
+    </div>
+    <button class="btn btn-primary btn-lg" type="submit" name="submit"> Reserve </button>
+
+</form>
+    </section>
+</div>
+</body>
+</html>
+{% endblock %}
+{% block scripts %}
+<script>
+    reservationPeriod = {{ period|json_encode()|raw }}
+    $('.datepicker').datepicker({
+        format:  "yyyy-mm-dd",
+        startDate: 'now',
+        'datesDisabled': reservationPeriod
+    })
+</script>
+{% endblock %}
